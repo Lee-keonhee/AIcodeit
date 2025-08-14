@@ -134,8 +134,7 @@ GBM의 최적화 문제를 Additive Training (가산 학습), Gradient Boosting 
 - 장점 : 높은 성능, 여러 모델의 장단점을 보완
 - 단점 : 높은 복잡성, 과적합 가능성
 
-
 ---
 
-[결정트리와 랜덤 포레스트 구현 코드 확인하기]({{site.baseurl}}/2025/07/DecisionTree_RandomForest_code/)
+[결정트리와 랜덤 포레스트 구현 코드 확인하기]({{"post/2025/07/DecisionTree_RandomForest_code/" | relative_url}})
 ---
