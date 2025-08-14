@@ -13,10 +13,9 @@ tags: [딥러닝 기초]
 
 이미지 분류는 이미지 내의 특정 사물을 분류하는 것이다. 예를 들면, 아래 그림과 같이 강아지의 이미지를 보고 해당 사물을 강아지로 분류하는 것을 이미지 분류이라고 한다.
 
-<img src="/assets/images/dog.jpg" width="300" height="200" alt="강아지">
+<img src="{{"/assets/images/dog.jpg" | relative_url }}" width="300" height="200" alt="강아지">
 
 [//]: # (![강아지 사진]&#40;/assets/images/dog.jpg&#41;)
-
 
 ### MLP(Multi Layer Perceptron)의 한계
 
