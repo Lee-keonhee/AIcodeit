@@ -6,11 +6,11 @@ name: AI 공부 블로그
 description: Software Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: http://Lee-keonhee.github.io/AIcodit
+url: http://Lee-keonhee.github.io/AIcodeit
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organization's page leave it empty)
-baseurl: '/AIcodit'
+baseurl: '/AIcodeit'
 
 author: Pavel Makhov
 copyright: 2015-2018
