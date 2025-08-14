@@ -125,5 +125,5 @@ tags: [딥러닝 기초]
 ## 6. dropout
 드롭아웃은 신경망의 과적합(Overfitting)을 방지하기 위한 정규화(Regularization) 기법 중 하나입니다. 학습 과정에서 무작위로 선택된 뉴런들을 임시적으로 비활성화시켜 업데이트에 참여시키지 않음으로써, 각 뉴런이 다른 뉴런에 과도하게 의존하는 것을 방지하고 모델의 일반화 성능을 향상시키는 효과를 가져옵니다.
 
-![드롭아웃](/assets/images/dropout.png)
+![드롭아웃]({{"/assets/images/dropout.png"| relative_url}})
 (이미지출처-a simple way to prevent neural networks from overfitting)
