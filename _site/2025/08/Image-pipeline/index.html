@@ -1,0 +1,255 @@
+
+
+
+
+
+
+
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI 공부 블로그 | 이미지 파이프라인 </title>
+    <meta name="theme-color" content="#222222"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap4.min.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/css/svg-with-js/js/fontawesome-all.js"></script>
+    <link href="/assets/css/bootstrap4.min.css" rel="stylesheet">
+    <link href="/assets/css/theme.css" rel="stylesheet">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+ </head>
+
+<body>
+
+
+
+
+
+
+<script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Ubuntu::latin']
+        }
+    };
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">AI 공부 블로그</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">home</a>
+                <a class="nav-item nav-link" href="/archive">archive</a>
+                <a class="nav-item nav-link" href="/tags">tags</a>
+                <a class="nav-item nav-link" href="/about">about</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8 offset-md-1">
+              <div class="article">
+                <div class="card">
+                  <h1><a href="/2025/08/Image-pipeline/">이미지 파이프라인</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar-alt"></i>
+                      <time>14 Aug 2025</time>
+                    </div>
+                    <ul>
+                      
+                        <li><a href="/tag/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EA%B8%B0%EC%B4%88">딥러닝 기초</a></li>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    
+                    <hr />
+<h2 id="1-이미지-파이프라인">1. 이미지 파이프라인</h2>
+<hr />
+<p>이미지 파이프라인은 원본 이미지 파일을 모델 학습에 적합한 형태로 입력하기 위한 처리 단계를 의미<br />
+데이터 수집- 전처리(리사이즈, 정규화) - 증강 - Batch 화 등으로 이어지는 전체의 흐름</p>
+
+<hr />
+
+<h2 id="2-이미지-파이프라인의-핵심-구성요소">2. 이미지 파이프라인의 핵심 구성요소</h2>
+<hr />
+<ul>
+  <li>데이터 수집 및 저장:<br />
+파일 시스템, 아카이브(tar/webdataset), DB(LMDB/TFRecord) 등으로 원본을 관리합니다.</li>
+  <li>로드(I/O): <br />
+이미지 파일 읽기, 캐시, prefetch 등을 통해 디스크/네트워크 병목을 완화합니다.</li>
+  <li>전처리(Deterministic): <br />
+리사이즈, 센터크롭, 정규화 등 검증/추론용 일관된 처리.</li>
+  <li>증강(Augmentation): <br />
+학습용 무작위 변형(회전, 플립, 색상 변화 등) — on-the-fly 또는 오프라인 저장 방식 선택.</li>
+  <li>배치화 및 전송: <br />
+DataLoader 설정, num_workers, prefetch, pin_memory 등으로 GPU로의 전달을 최적화합니다.</li>
+  <li>캐싱/아카이빙: <br />
+변환 비용이 크면 오프라인으로 변환해 저장하거나 메모리/디스크 캐시 사용.</li>
+  <li>모니터링·로깅: <br />
+입력 품질 검사, 샘플 시각화, 메타데이터(어떤 증강을 적용했는지) 기록.</li>
+  <li>배포 파이프라인(추론용): <br />
+모델 서빙 앞단에서의 전처리·후처리와 모델 인퍼런스 흐름(클라우드 파이프라인으로 구성 가능)</li>
+</ul>
+
+<hr />
+<h2 id="3-이미지-파이프라인-최적화-라이브러리">3. 이미지 파이프라인 최적화 라이브러리</h2>
+<hr />
+
+<ul>
+  <li>torchvision<br />
+transforms, DataLoader 등 파이프라인의 기준점 제공</li>
+  <li>Albumentations<br />
+빠르고 유연한 증강 라이브러리, 다양한 변환을 효율적으로 구성</li>
+  <li>Kornia<br />
+Pytorch 텐서 상에서 GPU로 증강을 수행할 수 있음, CPU 병목 해소</li>
+  <li>Nvidia Dali<br />
+데이터 로딩/전처리/증강을 GPU에서 처리해 대규모 학습에서 CPU 병목을 해소</li>
+  <li>pyvips / libvips / sharp (Node용) <br />
+대용량 이미지를 고속으로 리사이즈·변형할 때 탁월한 성능을 보이는 라이브러리(특히 오프라인 전처리에서 유리). sharp는 libvips 기반의 고성능 도구</li>
+</ul>
+
+<hr />
+<h3 id="단계별-라이브러리-선택">단계별 라이브러리 선택</h3>
+<ul>
+  <li>개발 및 디버깅 <br />
+torchvision + Albumentations // konia</li>
+  <li>본 훈련<br />
+DALI // konia + DataLoader 튜닝</li>
+  <li>오프라인 대량 전처리(리사이즈/캐시)<br />
+pyvips // sharp</li>
+</ul>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2025/08/Image-pipeline/">이미지 파이프라인</a></li>
+    
+    <li><a href="/2025/08/Image-classification/">이미지 분류</a></li>
+    
+    <li><a href="/2025/08/Pytorch/">Pytorch</a></li>
+    
+    <li><a href="/2025/07/RNN/">RNN(Recurrent Neural Network)</a></li>
+    
+    <li><a href="/2025/07/LSTM/">RNN(Recurrent Neural Network)</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="fa-ul">
+    
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Pandas" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Pandas</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Python" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Python</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/code" data-toggle="tooltip" data-placement="right" title="4">
+        <span>code</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="10">
+        <span>딥러닝 기초</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="7">
+        <span>머신러닝기초</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Pavel Makhov &copy; 2015-2018</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="Lee-keonhee on Github" href="https://github.com/Lee-keonhee" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fab fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fab fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fas fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

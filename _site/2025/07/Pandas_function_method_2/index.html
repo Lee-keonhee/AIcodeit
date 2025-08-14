@@ -1,0 +1,348 @@
+
+
+
+
+
+
+
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI 공부 블로그 | Pandas 핵심 함수와 메서드 정리-2 </title>
+    <meta name="theme-color" content="#222222"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap4.min.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/css/svg-with-js/js/fontawesome-all.js"></script>
+    <link href="/assets/css/bootstrap4.min.css" rel="stylesheet">
+    <link href="/assets/css/theme.css" rel="stylesheet">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+ </head>
+
+<body>
+
+
+
+
+
+
+<script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Ubuntu::latin']
+        }
+    };
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">AI 공부 블로그</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">home</a>
+                <a class="nav-item nav-link" href="/archive">archive</a>
+                <a class="nav-item nav-link" href="/tags">tags</a>
+                <a class="nav-item nav-link" href="/about">about</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8 offset-md-1">
+              <div class="article">
+                <div class="card">
+                  <h1><a href="/2025/07/Pandas_function_method_2/">Pandas 핵심 함수와 메서드 정리-2</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar-alt"></i>
+                      <time>28 Jul 2025</time>
+                    </div>
+                    <ul>
+                      
+                        <li><a href="/tag/Python">Python</a></li>
+                      
+                        <li><a href="/tag/Pandas">Pandas</a></li>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    
+                    <hr />
+
+<h2 id="pandas-자주-사용하는-메서드">Pandas 자주 사용하는 메서드</h2>
+
+<hr />
+
+<p>지난 시간에는 pd.read_csv()와 같이 Pandas의 데이터 구조화 함수들을 다루었다. 이제는 데이터프레임과 시리즈 객체에 직접 적용하는 다양한 핵심 메서드들을 살펴볼 차례입니다. 이 메서드들은 데이터의 효율적인 조작, 변형 및 분석을 위한 필수적인 도구입니다. 본 글을 통해 실제 데이터 처리 과정에서 유용한 Pandas 메서드들을 소개한다.</p>
+
+<hr />
+<h3 id="-1-데이터-프레임-기본-정보확인">   1. 데이터 프레임 기본 정보확인</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">df.head(n=5)</code>:<br />
+데이터프레임의 상위 n개 행을 확인한다. 기본값은 5개이다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.tail(n=5)</code>: <br />
+데이터프레임의 하위 n개 행을 확인한다. 기본값은 5개이다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.info()</code>: <br />
+데이터프레임의 컬럼별 정보 (데이터 타입, 결측치 여부, 메모리 사용량)를 요약해서 보여준다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.shape</code>: <br />
+데이터프레임의 행과 열 개수를 <strong>튜플</strong> 형태로 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.columns</code>:<br />
+데이터프레임의 모든 컬럼 이름들을 반환한다.필요에 따라 ‘.tolist()’나 ‘.to_numpy’를 붙여 리스트나 numpy.array로 변환하는 경우가 많다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.index</code>: <br />
+데이터프레임의 인덱스 정보를 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.dtypes</code>:<br />
+각 컬럼의 데이터 타입을 Series 형태로 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.describe()</code>: <br />
+값의 개수(결측치 제외), 평균, 표준편차, 최소값, 1사분위수, 중앙값, 3사분위수, max값 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.sample(n=5)</code>:<br />
+무작위 샘플 n개 추출한다. 데이터프레임 형태로 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.nunique()</code>:<br />
+각 컬럼의 고유값 개수를 추출한다. Series형태로 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">Series.nunique()</code>:<br />
+해당 Series의 고유값 개수를 추출한다. int 형태로 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">Series.unique()</code>: <br />
+해당 Series의 고유값을 추출한다. numpy.array형태로 반환한다. <br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.mode()</code> / <code class="language-plaintext highlighter-rouge">series.mode()</code>: <br />
+데이터프레임의 각 컬럼 또는 Series에서 <strong>최빈값(가장 자주 나타나는 값)</strong>을 반환한다. 최빈값이 여러 개일 경우 모두 반환한다.</li>
+</ul>
+
+<hr />
+
+<h3 id="-2-데이터-선택-및-필터링">   2. 데이터 선택 및 필터링</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">df['컬럼명']</code> / <code class="language-plaintext highlighter-rouge">df[['컬럼1', '컬럼2']]</code>: <br />
+해당 컬럼(들)을 선택한다. 1개일 경우, Series, 2개 이상일 경우, 데이터프레임으로 반환한다. 이때 하나의 컬럼명을 리스트 df[[‘컬럼명’]] 형태로 선택하면 1개 컬럼이더라도 데이터프레임으로 반환된다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.loc[행인덱스, 열인덱스]</code>: <br />
+라벨(이름) 기반으로 데이터를 선택한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.iloc[행위치, 열위치]</code>: <br />
+정수 위치 기반으로 데이터를 선택한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df[조건]</code>: <br />
+불리언 인덱싱으로 특정 조건에 맞는 행을 필터링한다. df[조건]형식으로 조건에 맞는 데이터 추려냄. 여러 조건일경우 df[(조건1)&amp;(조건2)] 이런 방식으로 사용한다.</li>
+</ul>
+
+<hr />
+
+<h3 id="-3-데이터-조작-및-변형">   3. 데이터 조작 및 변형</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">df.drop(labels, axis)</code>: <br />
+특정 행(axis=0) 또는 열(axis=1)을 삭제한다. 원본을 변경하려면 inplace=True를 추가한다. 즉, 따로 변수에 저장하지 않아도 업데이트된다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.rename(columns={'원래이름': '새이름'})</code>: <br />
+컬럼 또는 인덱스 이름을 변경한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.replace(to_replace, value)</code>: <br />
+특정 값을 다른 값으로 대체한다. 단일 값, 리스트, 딕셔너리 등 다양한 형태로 사용 가능하다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.set_index(keys, inplace=False)</code>: <br />
+특정 컬럼(들)을 새로운 인덱스로 설정한다. inplace=True로 원본 변경 가능하다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.reset_index(level=None, drop=False, inplace=False)</code>: <br />
+현재 인덱스를 컬럼으로 변환하고, 새로운 기본(0부터 시작하는) 정수 인덱스를 생성한다. drop=True로 기존 인덱스를 제거할 수 있다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.sort_values(by='컬럼명', ascending=True)</code>: <br />
+특정 컬럼의 값을 기준으로 데이터프레임을 정렬한다. ascending=False로 내림차순 정렬할 수 있다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.value_counts()</code> (Series 메서드): <br />
+Series 내 고유값들의 빈도수를 계산하여 Series로 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.astype(dtype)</code>:<br />
+데이터프레임 전체 또는 특정 Series의 데이터 타입을 변경한다. <code class="language-plaintext highlighter-rouge">df.astype({'컬럼1': int, '컬럼2': float})</code> 와 같이 적용 가능하다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.groupby('기준_컬럼').agg(집계함수)</code>: <br />
+특정 컬럼을 기준으로 데이터를 그룹화한 후, 각 그룹에 집계 함수(sum, mean, count 등)를 적용한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.mean()</code>, <code class="language-plaintext highlighter-rouge">df.sum()</code>, <code class="language-plaintext highlighter-rouge">df.min()</code>, <code class="language-plaintext highlighter-rouge">df.max()</code>, <code class="language-plaintext highlighter-rouge">df.std()</code>, <code class="language-plaintext highlighter-rouge">df.median()</code>: <br />
+숫자형 컬럼에 대한 평균, 합계, 최솟값, 최댓값, 표준편차, 중앙값 등을 계산한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.pivot_table(values=None, index=None, columns=None, aggfunc='mean')</code>: <br />
+데이터프레임을 특정 컬럼들을 기준으로 재구성하여 요약 테이블(피벗 테이블)을 생성한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">series.map(arg)</code>: <br />
+Series의 각 값에 함수나 딕셔너리를 매핑하여 새로운 Series를 생성한다. Series에만 적용 가능하다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.apply(any_fn, axis=0)</code>:<br />
+각 열(axis=0) 또는 행(axis=1)을 <strong>Series 형태로</strong> 함수의 인자로 넘겨 함수를 적용한다. 그 결과로 새로운 DataFrame이나 Series를 반환한다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">Series.apply(any_fn)</code>:<br />
+Series의 각 <strong>개별 요소(값)</strong>에 함수를 적용한다.</li>
+</ul>
+
+<hr />
+
+<h3 id="-4-결측치-중복치-처리">   4. 결측치, 중복치 처리</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">df.isnull()</code> / <code class="language-plaintext highlighter-rouge">df.isna()</code>: <br />
+데이터프레임의 결측치를 True로 반환한다. ‘.sum()’를 활용하여 결측치 개수 확인할 수 있다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.fillna(value)</code>: <br />
+결측치를 특정 value로 채운다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.dropna(axis)</code>: <br />
+결측치가 있는 행(axis=0) 또는 열(axis=1)을 제거한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">df.duplicated(subset=None, keep='first')</code>: <br />
+중복된 행을 True/False로 표시한다. subset으로 특정 컬럼만 지정하여 중복을 검사할 수 있으며, keep으로 ‘first’ (첫 번째만), ‘last’ (마지막만), ‘False’ (모두)를 표시할 수 있다.<br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">df.drop_duplicates(subset=None, keep='first', inplace=False)</code>:<br />
+중복된 행을 삭제한다.</li>
+</ul>
+
+<hr />
+
+<p>오늘은 Pandas <code class="language-plaintext highlighter-rouge">DataFrame</code>과 <code class="language-plaintext highlighter-rouge">Series</code>의 가장 기본적인 정보들을 한눈에 파악할 수 있는 메서드들을 살펴보았습니다. <code class="language-plaintext highlighter-rouge">.head()</code>, <code class="language-plaintext highlighter-rouge">.info()</code>, <code class="language-plaintext highlighter-rouge">.shape</code>처럼 단순해 보이는 기능들이지만, 데이터를 처음 마주했을 때 전체적인 그림을 그리는 데 필수적인 도구입니다. 이 외에도 <code class="language-plaintext highlighter-rouge">.columns</code>, <code class="language-plaintext highlighter-rouge">.index</code>, <code class="language-plaintext highlighter-rouge">.dtypes</code> 같은 속성들은 데이터의 구조를 이해하는 데 큰 도움이 될 것입니다.</p>
+
+<p>더 많은 Pandas 함수와 메서드를 탐구하고 싶으시면, 아래 링크를 통해 확인할 수 있습니다.</p>
+
+<ul>
+  <li><a href="/2025/07/Pandas_function_method_1/">** Pandas 핵심 함수와 메서드 정리-1**</a></li>
+  <li><a href="/2025/07/Pandas_function_method_code_1/">** Pandas 핵심 메서드: 데이터프레임 기본 정보확인 코드 예제**</a></li>
+  <li><a href="/2025/07/Pandas_function_method_code_2/">** Pandas 핵심 메서드: 데이터 선택 및 필터링 코드 예제**</a></li>
+  <li><a href="/2025/07/Pandas_function_method_code_3/">** Pandas 핵심 메서드: 데이터 조작 및 변형 코드 예제**</a></li>
+  <li><a href="/2025/07/Pandas_function_method_code_4/">** Pandas 핵심 메서드: 결측치, 중복치 처리 예제**</a></li>
+</ul>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2025/08/Image-pipeline/">이미지 파이프라인</a></li>
+    
+    <li><a href="/2025/08/Image-classification/">이미지 분류</a></li>
+    
+    <li><a href="/2025/08/Pytorch/">Pytorch</a></li>
+    
+    <li><a href="/2025/07/RNN/">RNN(Recurrent Neural Network)</a></li>
+    
+    <li><a href="/2025/07/LSTM/">RNN(Recurrent Neural Network)</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="fa-ul">
+    
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Pandas" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Pandas</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Python" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Python</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/code" data-toggle="tooltip" data-placement="right" title="4">
+        <span>code</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="10">
+        <span>딥러닝 기초</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="7">
+        <span>머신러닝기초</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Pavel Makhov &copy; 2015-2018</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="Lee-keonhee on Github" href="https://github.com/Lee-keonhee" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fab fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fab fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fas fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

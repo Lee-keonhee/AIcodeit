@@ -1,0 +1,186 @@
+
+
+
+
+
+
+
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI 공부 블로그</title>
+    <meta name="theme-color" content="#222222"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap4.min.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/css/svg-with-js/js/fontawesome-all.js"></script>
+    <link href="/assets/css/bootstrap4.min.css" rel="stylesheet">
+    <link href="/assets/css/theme.css" rel="stylesheet">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+ </head>
+
+<body>
+
+
+
+
+
+
+<script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Ubuntu::latin']
+        }
+    };
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">AI 공부 블로그</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">home</a>
+                <a class="nav-item nav-link" href="/archive">archive</a>
+                <a class="nav-item nav-link" href="/tags">tags</a>
+                <a class="nav-item nav-link" href="/about">about</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8 offset-md-1">
+              <div class="card">
+                <p>Run this under <strong>tag</strong> folder in order to generate a page for each of your tags. If you added a new tag you need to come to this page and run the script again.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">$'---</span><span class="se">\n</span><span class="s1">layout: tag_index</span><span class="se">\n</span><span class="s1">tag: 머신러닝기초 </span><span class="se">\n</span><span class="s1">---'</span> <span class="o">&gt;</span> <span class="s1">'머신러닝기초.md'</span> &amp;
+<span class="nb">echo</span> <span class="s1">$'---</span><span class="se">\n</span><span class="s1">layout: tag_index</span><span class="se">\n</span><span class="s1">tag: Python </span><span class="se">\n</span><span class="s1">---'</span> <span class="o">&gt;</span> <span class="s1">'Python.md'</span> &amp;
+<span class="nb">echo</span> <span class="s1">$'---</span><span class="se">\n</span><span class="s1">layout: tag_index</span><span class="se">\n</span><span class="s1">tag: Pandas </span><span class="se">\n</span><span class="s1">---'</span> <span class="o">&gt;</span> <span class="s1">'Pandas.md'</span> &amp;
+<span class="nb">echo</span> <span class="s1">$'---</span><span class="se">\n</span><span class="s1">layout: tag_index</span><span class="se">\n</span><span class="s1">tag: 딥러닝 기초 </span><span class="se">\n</span><span class="s1">---'</span> <span class="o">&gt;</span> <span class="s1">'딥러닝 기초.md'</span> &amp;
+<span class="nb">echo</span> <span class="s1">$'---</span><span class="se">\n</span><span class="s1">layout: tag_index</span><span class="se">\n</span><span class="s1">tag: code </span><span class="se">\n</span><span class="s1">---'</span> <span class="o">&gt;</span> <span class="s1">'code.md'</span> &amp;</code></pre></figure>
+
+
+              </div>
+            </div>
+            <div class="col-md-3 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2025/08/Image-pipeline/">이미지 파이프라인</a></li>
+    
+    <li><a href="/2025/08/Image-classification/">이미지 분류</a></li>
+    
+    <li><a href="/2025/08/Pytorch/">Pytorch</a></li>
+    
+    <li><a href="/2025/07/RNN/">RNN(Recurrent Neural Network)</a></li>
+    
+    <li><a href="/2025/07/LSTM/">RNN(Recurrent Neural Network)</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="fa-ul">
+    
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Pandas" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Pandas</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Python" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Python</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/code" data-toggle="tooltip" data-placement="right" title="4">
+        <span>code</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="10">
+        <span>딥러닝 기초</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="7">
+        <span>머신러닝기초</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Pavel Makhov &copy; 2015-2018</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="Lee-keonhee on Github" href="https://github.com/Lee-keonhee" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fab fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fab fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fas fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,366 @@
+
+
+
+
+
+
+
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI 공부 블로그 | 결정 트리(Decision tree)와 앙상블(Ensemble) </title>
+    <meta name="theme-color" content="#222222"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap4.min.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/css/svg-with-js/js/fontawesome-all.js"></script>
+    <link href="/assets/css/bootstrap4.min.css" rel="stylesheet">
+    <link href="/assets/css/theme.css" rel="stylesheet">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+ </head>
+
+<body>
+
+
+
+
+
+
+<script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Ubuntu::latin']
+        }
+    };
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">AI 공부 블로그</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">home</a>
+                <a class="nav-item nav-link" href="/archive">archive</a>
+                <a class="nav-item nav-link" href="/tags">tags</a>
+                <a class="nav-item nav-link" href="/about">about</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8 offset-md-1">
+              <div class="article">
+                <div class="card">
+                  <h1><a href="/2025/07/DecisionTree_Ensemble/">결정 트리(Decision tree)와 앙상블(Ensemble)</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar-alt"></i>
+                      <time>22 Jul 2025</time>
+                    </div>
+                    <ul>
+                      
+                        <li><a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88">머신러닝기초</a></li>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    
+                    <hr />
+<hr />
+<h2 id="결정-트리decision-tree">결정 트리(Decision Tree)</h2>
+<p><strong>결정 트리(Decision Tree)</strong>는 의사결정트리라고도 불리며, <strong>분류(classification)</strong>와 회귀(regression) 문제 모두에 사용할 수 있는 지도 학습(supervised learning) 모델입니다.</p>
+
+<p>결정 트리는 <strong>특정 기준(예: 불순도 감소(분류), 분산 감소(회귀) 등)</strong>에 따라 데이터를 분할하며, 각 분할 기준은 특성(feature) 값에 기반합니다.<br />
+데이터는 <strong>루트 노드(root node)</strong>에서 시작해 조건에 따라 왼쪽 또는 오른쪽 자식 노드로 나누어지며, <strong>리프 노드(leaf node)</strong>에 도달할 때까지 반복적으로 분할됩니다.</p>
+
+<p>(여기 결정트리 그림 넣기)</p>
+
+<hr />
+
+<h3 id="문제-유형에-따른-출력-방식">문제 유형에 따른 출력 방식</h3>
+<ul>
+  <li>
+    <p>분류 문제 (Classification)<br />
+리프 노드에 도달한 샘플들의 <strong>최빈값(majority class)</strong>을 대표값으로 사용해 예측합니다.</p>
+  </li>
+  <li>
+    <p>회귀 문제 (Regression)<br />
+리프 노드에 도달한 샘플들의 <strong>평균값(mean)</strong>을 대표값으로 사용해 예측합니다.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="분할-기준">분할 기준</h3>
+<p>결정 트리는 노드 분할 시, 분할 후 발생하는 불확실성이나 오차를 최소화하는 최적의 기준을 찾습니다. 문제 유형에 따라 사용하는 기준이 달라집니다.</p>
+<ol>
+  <li>분류문제 : 불순도(Impurity) 감소
+    <ul>
+      <li><strong><em>불순도(Impurity)</em></strong> : 특정 노드 안에 있는 데이터 샘플들이 얼마나 섞여 있는지, 즉 얼마나 균일하지 않은지를 나타내는 척도를 나타냅니다.</li>
+      <li><strong><em>지니 불순도</em></strong> : 무작위로 선택한 샘플이 잘못 분류될 확률을 측정합니다. 계산이 간단하여 많이 사용됩니다.</li>
+      <li><strong><em>엔트로피(Entropy)</em></strong> : 노드 내 데이터의 무질서도나 불확실성을 나타냅니다. 엔트로피가 낮을수록 순수합니다.<br />
+<br /></li>
+    </ul>
+  </li>
+  <li>회귀 문제: 분산 및 평균제곱오차(MSE) 최소화
+    <ul>
+      <li>회귀 트리에서는 노드의 예측값으로 해당 노드에 속한 샘플들의 평균을 사용합니다.</li>
+      <li>평균제곱오차(Mean Squared Error, MSE): 노드 내 샘플들의 실제 값과 해당 노드의 평균 예측값 사이의 오차를 측정합니다. MSE가 작다는 것은 해당 노드의 데이터가 평균 주변에 <strong>더욱 밀집되어 있음(분산이 작음)</strong>을 의미합니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="장점">장점</h3>
+<ul>
+  <li>해석 용이성 (시각화 쉬움)</li>
+  <li>비선형 관계 포착.</li>
+</ul>
+
+<h3 id="단점">단점</h3>
+<ul>
+  <li>과적합(Overfitting)에 취약 (-&gt; 앙상블 활용)</li>
+</ul>
+
+<hr />
+<hr />
+
+<h2 id="앙상블ensemble">앙상블(Ensemble)</h2>
+
+<p>앙상블은 여러 개의 <strong>모델</strong>을 결합하여 <strong>하나의 최종 예측 모델</strong>을 만드는 머신러닝 기법입니다. 단일 모델의 한계를 극복하고 예측 성능과 안정성을 높이는 데 효과적입니다.</p>
+
+<hr />
+<h3 id="배깅bagging-bootstrap-aggregating"><strong><em>배깅(Bagging, Bootstrap Aggregating)</em></strong></h3>
+<ul>
+  <li>배깅(Bagging)<br />
+부트 스트랩 샘플링(Bootstrap Sampling) : 중복을 허용해서 여러 개의 작은 데이터셋을 샘플링함<br />
+Bagging의 기법을 활용한 대표적인 알고리즘으로는 랜덤 포레스트가 있음.</li>
+</ul>
+
+<h4 id="랜덤-포레스트random-forest"><strong><em>랜덤 포레스트(random forest)</em></strong></h4>
+
+<p>많은 decision tree가 모여서 하나의 숲을 이루는 모델, 앙상블 기법 중 Bagging(Bootstrap aggregating)을 기반으로 작동</p>
+
+<p><strong><em>동작 방식</em></strong></p>
+<ul>
+  <li>부트 스트랩 샘플링(Bootstrap Sampling) : 중복을 허용해서 여러 개의 작은 데이터셋을 샘플링</li>
+  <li>하나의 트리 하나당 하나의 부트스트랩된 데이터 셋이 들어감</li>
+  <li>특성 무작위 선택 : 여러가지 feature 중에 랜덤으로 랜덤의 수를 사용하고 이를 최적의 분할 기준을 찾음</li>
+</ul>
+
+<p><strong><em>장점</em></strong></p>
+<ul>
+  <li>과적합 방지효과 : 부트 스트랩 샘플링, 특성 무작위 선택 -&gt; 다양한 트리 생성을 통해 서로의 단점 보완</li>
+  <li>예측 성능 향상</li>
+  <li>안정적인 모델</li>
+  <li>특성 중요도(Feature Importance) 제공 : 어떤 특성이 모델의 예측에 가장 큰 영향을 미치는 지 알 수 있음</li>
+</ul>
+
+<p><strong><em>단점</em></strong></p>
+<ul>
+  <li>개별 트리가 복잡할수록 (트리가 많아질수록) 모델의 해석이 어려워짐</li>
+</ul>
+
+<hr />
+
+<h3 id="부스팅boosting"><strong><em>부스팅(Boosting)</em></strong></h3>
+
+<p>부스팅은 배깅과 달리 모델들을 <strong>순차적으로(직렬적으로)</strong> 학습시키는 앙상블 기법입니다. 이전 모델의 예측 오차를 다음 모델이 학습하여 점진적으로 성능을 개선해나가는 방식입니다. 주로 모델의 편향(Bias)을 줄이는 데 집중하며, 이를 통해 최종 모델의 정확성을 크게 향상시킵니다.</p>
+
+<ol>
+  <li>부스팅의 핵심
+    <ul>
+      <li>순차적학습- 직렬적으로 학습시켜</li>
+      <li>오류보정 - 이전 모델의 오류를 다음 모델이 학습하여 잘못 예측한 데이터에 가중치 차등부여</li>
+      <li>편향감소 - 개별 모델의 예측이 가진 높은 변동성 상쇄 -&gt; 전체적인 예측의 안정성 향상<br />
+<br /></li>
+    </ul>
+  </li>
+  <li>대표적인 부스팅 알고리즘
+    <ul>
+      <li><strong><em>AdaBoost(adaptive boosting)</em></strong><br />
+여러 개의 약한학습기(Stump, depth가 1인 결정트리)를 직렬적으로 학습시켜 강한 학습기 생성.<br />
+장점 : 구현이 간단하고, 단일 약한 학습기보다 성능이 크게 향상<br />
+단점 : 노이즈 및 이상치에 민감<br />
+<br /></li>
+      <li><strong><em>Gradient Boosting machine(GBM)</em></strong><br />
+이전의 약한 학습기의 예측 오차를 직접적으로 학습하여 다음 약한 학습기 생성. 잔차를 줄이는 방향으로 경사 하강법처럼 모델을 최적화<br />
+장점 : 예측 정확도가 높고 다양한 종류의 데이터에 적용 가능<br />
+단점 : 과적합에 취약할 수 있으며, AdaBoost보다 학습시간 오래 걸림<br />
+<br /></li>
+      <li><strong><em>XGBoost(eXtreme Gradient Boosting)</em></strong><br />
+GBM의 최적화 문제를 Additive Training (가산 학습), Gradient Boosting (경사 부스팅), Regularization (정규화), Shrinkage (축소/학습률), Column Subsampling (열 샘플링)을 활용하여 과적합을 방지하고 모델의 안정성을 높임.<br />
+장점 : 뛰어난 예측 성능, 빠른 학습 속도, 높은 안정성 및 유연성<br />
+단점 : 많은 파라미터 튜닝이 필요<br />
+<br /></li>
+      <li><strong><em>LightGBM</em></strong><br />
+대규모 데이터셋과 고차원 데이터에 특화된 GBM 알고리즘<br />
+<strong>‘히스토그램 기반 알고리즘’</strong>과 GOSS(Gradient-based One-Side Sampling), EFB(Exclusive Feature Bundling) 같은 독창적인 기술을 사용하여 학습 속도와 메모리 효율을 극대화<br />
+리프-중심(Leaf-wise) 트리 성장’ 방식을 사용하여 손실을 가장 많이 줄일 수 있는 리프 노드를 우선적으로 분할하며, 이는 균형적이지는 않지만 빠른 학습을 가능<br />
+장점 : 빠른 학습 속도, 적은 메모리 사용량 -&gt; 대용량 데이터 처리 및 실시간 예측에 적합<br />
+단점 : 작은 데이터셋에서는 과적합 위험이 높음<br />
+<br /></li>
+      <li><strong><em>CatBoost</em></strong><br />
+범주형(Categorical) 특성을 효율적이고 정확하게 처리하는 데 강점을 가진 GBM 알고리즘<br />
+<strong>‘타겟 평균 인코딩(Target Mean Encoding)’</strong>과 같은 특화된 기법을 통해 범주형 특성을 전처리 과정 없이도 내부적으로 직접 처리<br />
+장점: 범주형 특성이 많은 데이터셋에서 높은 성능, 기본 파라미터로도 좋은 성능을 내어 하이퍼파라미터 튜닝 적음<br />
+단점: LightGBM에 비해 학습 속도 느림, 메모리 사용량 많음</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+<h3 id="스태킹stacking"><strong><em>스태킹(Stacking)</em></strong></h3>
+<p>여러 종류의 다양한 모델들을 계층적으로 결합하여 최종 예측의 성능을 극대화하는 앙상블 기법<br />
+서로 다른 ‘학습 편향(Learning Bias)’을 가진 모델들의 예측 결과를 새로운 ‘특성(Feature)’으로 사용하여 또 다른 최종 모델(메타 모델)을 학습시키는 방식</p>
+
+<ul>
+  <li>학습순서
+    <ol>
+      <li>기반 모델 학습<br />
+원본 학습데이터를 여러 폴드로 나누어, 각 기반 모델(랜덤 포레스트, XGBoost 등)을 학습</li>
+      <li>메타 모델 학습<br />
+기반 모델이 생성한 예측값(새로운 특성)을 입력으로 하여, 정답을 메타모델(로지스틱 회귀 등)로 학습</li>
+      <li>최종 예측</li>
+    </ol>
+  </li>
+  <li>장점 : 높은 성능, 여러 모델의 장단점을 보완</li>
+  <li>단점 : 높은 복잡성, 과적합 가능성</li>
+</ul>
+
+<hr />
+
+<h2 id="결정트리와-랜덤-포레스트-구현-코드-확인하기"><a href="/2025/07/DecisionTree_RandomForest_code/">결정트리와 랜덤 포레스트 구현 코드 확인하기</a></h2>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2025/08/Image-pipeline/">이미지 파이프라인</a></li>
+    
+    <li><a href="/2025/08/Image-classification/">이미지 분류</a></li>
+    
+    <li><a href="/2025/08/Pytorch/">Pytorch</a></li>
+    
+    <li><a href="/2025/07/RNN/">RNN(Recurrent Neural Network)</a></li>
+    
+    <li><a href="/2025/07/LSTM/">RNN(Recurrent Neural Network)</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="fa-ul">
+    
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Pandas" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Pandas</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Python" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Python</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/code" data-toggle="tooltip" data-placement="right" title="4">
+        <span>code</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="10">
+        <span>딥러닝 기초</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="7">
+        <span>머신러닝기초</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Pavel Makhov &copy; 2015-2018</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="Lee-keonhee on Github" href="https://github.com/Lee-keonhee" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fab fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fab fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fas fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

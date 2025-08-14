@@ -1,0 +1,246 @@
+
+
+
+
+
+
+
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI 공부 블로그 | 결정 트리(Decision tree)와 랜덤 포레스트 코드 구현 </title>
+    <meta name="theme-color" content="#222222"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap4.min.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/css/svg-with-js/js/fontawesome-all.js"></script>
+    <link href="/assets/css/bootstrap4.min.css" rel="stylesheet">
+    <link href="/assets/css/theme.css" rel="stylesheet">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+ </head>
+
+<body>
+
+
+
+
+
+
+<script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Ubuntu::latin']
+        }
+    };
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">AI 공부 블로그</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">home</a>
+                <a class="nav-item nav-link" href="/archive">archive</a>
+                <a class="nav-item nav-link" href="/tags">tags</a>
+                <a class="nav-item nav-link" href="/about">about</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8 offset-md-1">
+              <div class="article">
+                <div class="card">
+                  <h1><a href="/2025/07/DecisionTree_RandomForest_code/">결정 트리(Decision tree)와 랜덤 포레스트 코드 구현</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar-alt"></i>
+                      <time>22 Jul 2025</time>
+                    </div>
+                    <ul>
+                      
+                        <li><a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88">머신러닝기초</a></li>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    
+                    <h2 id="결정-트리decision-tree">결정 트리(Decision Tree)</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="nc">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="sh">'</span><span class="s">트리 깊이 제한(int)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">min_samples_split</span><span class="o">=</span><span class="sh">'</span><span class="s">노드를 분할하는데 필요한 최소 샘플수(int)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">min_samples_leaf</span><span class="o">=</span><span class="sh">'</span><span class="s">리프노드의 최소 샘플 수(int)</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="랜덤-포레스트random-forest">랜덤 포레스트(random forest)</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="nc">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="sh">'</span><span class="s">생성할 트리의 수(int)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">min_samples_split</span><span class="o">=</span><span class="sh">'</span><span class="s">노드를 분할하는데 필요한 최소 샘플수(int)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">min_samples_leaf</span><span class="o">=</span><span class="sh">'</span><span class="s">리프노드의 최소 샘플 수(int)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">max_depth</span><span class="o">=</span><span class="sh">'</span><span class="s">트리 깊이 제한(int)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">criterion</span><span class="o">=</span><span class="sh">'</span><span class="s">평가방법(gini, entropy)</span><span class="sh">'</span><span class="p">,</span>
+                              <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                              <span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+<h2 id="스태킹stacking">스태킹(Stacking)</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">StackingClassifier</span><span class="p">,</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="n">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="n">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nf">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># 클래스 2개, 샘플 1000개
+</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">estimators</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="sh">'</span><span class="s">rf</span><span class="sh">'</span><span class="p">,</span> <span class="nc">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
+    <span class="p">(</span><span class="sh">'</span><span class="s">log_reg</span><span class="sh">'</span><span class="p">,</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="sh">'</span><span class="s">liblinear</span><span class="sh">'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span> <span class="c1"># 다른 모델 추가 가능
+</span><span class="p">]</span>
+
+<span class="n">stk_clf</span> <span class="o">=</span> <span class="nc">StackingClassifier</span><span class="p">(</span>
+    <span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">,</span>
+    <span class="n">final_estimator</span><span class="o">=</span><span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="sh">'</span><span class="s">liblinear</span><span class="sh">'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span> <span class="c1"># 메타 모델
+</span>    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span> <span class="c1"># 교차 검증 폴드 수
+</span><span class="p">)</span>
+
+<span class="n">stk_clf</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">stk_clf</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">스태킹 모델의 정확도: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2025/08/Image-pipeline/">이미지 파이프라인</a></li>
+    
+    <li><a href="/2025/08/Image-classification/">이미지 분류</a></li>
+    
+    <li><a href="/2025/08/Pytorch/">Pytorch</a></li>
+    
+    <li><a href="/2025/07/RNN/">RNN(Recurrent Neural Network)</a></li>
+    
+    <li><a href="/2025/07/LSTM/">RNN(Recurrent Neural Network)</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="fa-ul">
+    
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Pandas" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Pandas</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/Python" data-toggle="tooltip" data-placement="right" title="6">
+        <span>Python</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/code" data-toggle="tooltip" data-placement="right" title="4">
+        <span>code</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="10">
+        <span>딥러닝 기초</span></a></li>
+    
+    <li><span class="fa-li"><i class="fas fa-tag"></i></span>
+            <a href="/tag/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88" data-toggle="tooltip" data-placement="right" title="7">
+        <span>머신러닝기초</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Pavel Makhov &copy; 2015-2018</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="Lee-keonhee on Github" href="https://github.com/Lee-keonhee" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fab fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fab fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fas fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>
