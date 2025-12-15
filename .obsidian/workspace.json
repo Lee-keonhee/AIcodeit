@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2025-12-08-weekly_14.md",
+                "file": "_posts/2025-12-14-weekly_15.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-12-08-weekly_14"
+              "title": "2025-12-14-weekly_15"
             }
           }
         ]
@@ -184,7 +184,8 @@
   },
   "active": "a316db015ab3b95d",
   "lastOpenFiles": [
-    "_posts/2025-11-07-weekly_13.md",
-    "_posts/2025-12-08-weekly_14.md"
+    "_posts/2025-12-08-weekly_14.md",
+    "_posts/2025-12-14-weekly_15.md",
+    "_posts/2025-11-07-weekly_13.md"
   ]
 }
